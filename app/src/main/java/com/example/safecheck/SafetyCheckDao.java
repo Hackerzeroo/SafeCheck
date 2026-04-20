@@ -1,6 +1,8 @@
 package com.example.safecheck;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,9 +19,13 @@ public interface SafetyCheckDao {
     @Insert
     void insertDefect(Defect defect);
 
+    @Delete
+    void deleteCheck(SafetyCheck check);
+
+    // LiveData auto-updates the UI when data changes; runs off main thread automatically
     // Get all inspections
-    @Query("SELECT * FROM safety_checks")
-    List<SafetyCheck> getAllChecks();
+    @Query("SELECT * FROM safety_checks ORDER BY checkId DESC")
+    LiveData<List<SafetyCheck>> getAllChecks();
 
     // Get one specific inspection by its ID
     @Query("SELECT * FROM safety_checks WHERE checkId = :id")
@@ -28,6 +34,9 @@ public interface SafetyCheckDao {
     // Get all defects belonging to one inspection
     @Query("SELECT * FROM defects WHERE checkId = :checkId")
     List<Defect> getDefectsForCheck(int checkId);
+
+    @Query("SELECT COUNT(*) FROM defects WHERE checkId = :checkId")
+    int countDefectsForCheck(int checkId);
 
     // Get only high severity defects for a check
     @Query("SELECT * FROM defects WHERE checkId = :checkId AND severity = 'High'")
