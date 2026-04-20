@@ -1,0 +1,39 @@
+package com.example.safecheck;
+
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface SafetyCheckDao {
+
+    // Insert a full inspection
+    @Insert
+    long insertCheck(SafetyCheck check);
+
+    // Insert a single defect linked to a check
+    @Insert
+    void insertDefect(Defect defect);
+
+    // Get all inspections
+    @Query("SELECT * FROM safety_checks")
+    List<SafetyCheck> getAllChecks();
+
+    // Get one specific inspection by its ID
+    @Query("SELECT * FROM safety_checks WHERE checkId = :id")
+    SafetyCheck getCheckById(int id);
+
+    // Get all defects belonging to one inspection
+    @Query("SELECT * FROM defects WHERE checkId = :checkId")
+    List<Defect> getDefectsForCheck(int checkId);
+
+    // Get only high severity defects for a check
+    @Query("SELECT * FROM defects WHERE checkId = :checkId AND severity = 'High'")
+    List<Defect> getHighSeverityDefects(int checkId);
+
+    // Get unrepaired defects
+    @Query("SELECT * FROM defects WHERE isRepaired = 0")
+    List<Defect> getUnrepairedDefects();
+}
