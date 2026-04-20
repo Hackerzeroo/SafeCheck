@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 public class SafetyRepository {
 
+    // storing in this repo so everything db related lives in one spot
     private SafetyCheckDao dao;
     private ExecutorService executor;
 
@@ -20,7 +21,6 @@ public class SafetyRepository {
         executor = Executors.newFixedThreadPool(2);
     }
 
-    // Writes run on background thread
     public void insertCheck(SafetyCheck check,
                             Consumer<Long> onDone) {
         executor.execute(() -> {
@@ -33,6 +33,7 @@ public class SafetyRepository {
         executor.execute(() -> dao.insertDefect(defect));
     }
 
+    // saves check first then loops defects so they get the right checkId
     public void insertCheckWithDefects(SafetyCheck check, List<Defect> defects) {
         executor.execute(() -> {
             long newId = dao.insertCheck(check);
@@ -47,17 +48,15 @@ public class SafetyRepository {
         executor.execute(() -> dao.deleteCheck(check));
     }
 
-    // LiveData reads — Room returns immediately, query runs on background thread
     public LiveData<List<SafetyCheck>> getAllChecks() {
         return dao.getAllChecks();
     }
 
-    // Reads — call on background thread from Activity
+    //dont call this on main!!
     public List<Defect> getDefectsForCheck(int checkId) {
         return dao.getDefectsForCheck(checkId);
     }
 
-    // Synchronous reads — only call from a background thread
     public SafetyCheck getCheckById(int id) {
         return dao.getCheckById(id);
     }

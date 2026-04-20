@@ -14,7 +14,7 @@ public class SafetyViewModel extends AndroidViewModel {
     private SafetyRepository repository;
     private LiveData<List<SafetyCheck>> allChecks;
 
-    // For the rotation test — text typed in AddCheckActivity stays here
+    //keeping typed text here so rotation doesnt wipe it
     public String draftVehicleReg = "";
     public String draftDriverName = "";
     public String draftDefectDescription = "";

@@ -24,6 +24,7 @@ public interface SafetyCheckDao {
 
     // LiveData auto-updates the UI when data changes; runs off main thread automatically
     // Get all inspections
+    //newest first
     @Query("SELECT * FROM safety_checks ORDER BY checkId DESC")
     LiveData<List<SafetyCheck>> getAllChecks();
 
@@ -32,6 +33,7 @@ public interface SafetyCheckDao {
     SafetyCheck getCheckById(int id);
 
     // Get all defects belonging to one inspection
+    //used when you tap into a check
     @Query("SELECT * FROM defects WHERE checkId = :checkId")
     List<Defect> getDefectsForCheck(int checkId);
 

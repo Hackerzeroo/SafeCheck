@@ -16,6 +16,7 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.CheckViewHolder> {
 
+    // list that gets swapped out when db changes
     private List<SafetyCheck> checks = new ArrayList<>();
     private Context context;
     private SafetyViewModel viewModel;
@@ -42,7 +43,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CheckViewHolder> {
     public void onBindViewHolder(@NonNull CheckViewHolder holder, int position) {
         SafetyCheck check = checks.get(position);
 
-        // Count defects on background thread, then update UI
+        //grabbing defect count off the main thread so ui doesnt lag
         viewModel.getRepository().runOnBackground(() -> {
             int count = viewModel.getRepository().countDefectsForCheck(check.checkId);
             holder.itemView.post(() ->
@@ -51,6 +52,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.CheckViewHolder> {
                             + count + " Defects"));
         });
 
+        // tap row = open detail
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("checkId", check.checkId);

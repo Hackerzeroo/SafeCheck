@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView defectsText = findViewById(R.id.defectsText);
         Button emailButton = findViewById(R.id.emailButton);
 
-        // Load data on background thread
+        //pulling check + defects off main so screen doesnt freeze
         viewModel.getRepository().runOnBackground(() -> {
             currentCheck = viewModel.getRepository().getCheckById(checkId);
             currentDefects = viewModel.getRepository().getDefectsForCheck(checkId);
@@ -53,13 +53,13 @@ public class DetailActivity extends AppCompatActivity {
         emailButton.setOnClickListener(v -> {
             if (currentCheck == null) return;
 
-            // Build email body from defects
+            //just dumping defects into the body
             StringBuilder body = new StringBuilder();
             for (Defect d : currentDefects) {
                 body.append("- ").append(d.description).append("\n");
             }
 
-            // Implicit Intent — opens whatever email app the user has
+            // opens whatever email app the user has installed
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT,

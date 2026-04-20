@@ -44,7 +44,7 @@ public class AddCheckActivity extends AppCompatActivity {
             String driver = driverInput.getText().toString().trim();
             String defectDesc = defectInput.getText().toString().trim();
 
-            // Input validation — no crash on empty form
+            // prevent empty form
             if (vehicle.isEmpty()) {
                 Toast.makeText(this, "Please enter vehicle details",
                         Toast.LENGTH_SHORT).show();
@@ -62,13 +62,14 @@ public class AddCheckActivity extends AppCompatActivity {
             if (!defectDesc.isEmpty()) {
                 Defect d = new Defect();
                 d.description = defectDesc;
+                // might make this a dropdown later
                 d.severity = "High";
                 defects.add(d);
             }
 
             viewModel.getRepository().insertCheckWithDefects(check, defects);
 
-            // Clear drafts after successful save
+            // wipe drafts so next time form is empty
             viewModel.draftVehicleReg = "";
             viewModel.draftDriverName = "";
             viewModel.draftDefectDescription = "";

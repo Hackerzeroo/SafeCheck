@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // checking to see if it will be called in main
         viewModel = new ViewModelProvider(this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(SafetyViewModel.class);
@@ -33,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new Adapter(this, viewModel);
         recyclerView.setAdapter(adapter);
 
-        // LiveData observer — auto-updates list when database changes
         viewModel.getAllChecks().observe(this, checks -> adapter.setChecks(checks));
 
+        //button to go to add screen
         Button addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddCheckActivity.class);
