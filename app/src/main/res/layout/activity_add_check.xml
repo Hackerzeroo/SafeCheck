@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Safety Check"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/vehicleInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vehicle Registration"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/driverInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Driver Name"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/defectInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Defect description (optional)"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

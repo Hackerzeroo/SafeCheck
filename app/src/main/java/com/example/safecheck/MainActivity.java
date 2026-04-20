@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
 
     private SafetyViewModel viewModel;
-    private CheckAdapter adapter;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CheckAdapter(this, viewModel);
+        adapter = new Adapter(this, viewModel);
         recyclerView.setAdapter(adapter);
 
         // LiveData observer — auto-updates list when database changes
