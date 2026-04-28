@@ -35,9 +35,27 @@ public class AddCheckActivity extends AppCompatActivity {
         defectInput.setText(viewModel.draftDefectDescription);
 
         // Save typed text into ViewModel as user types
-        vehicleInput.addTextChangedListener(new SimpleWatcher(s -> viewModel.draftVehicleReg = s));
-        driverInput.addTextChangedListener(new SimpleWatcher(s -> viewModel.draftDriverName = s));
-        defectInput.addTextChangedListener(new SimpleWatcher(s -> viewModel.draftDefectDescription = s));
+        vehicleInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void afterTextChanged(Editable s) {
+                viewModel.draftVehicleReg = s.toString();
+            }
+        });
+        driverInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void afterTextChanged(Editable s) {
+                viewModel.draftDriverName = s.toString();
+            }
+        });
+        defectInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            @Override public void afterTextChanged(Editable s) {
+                viewModel.draftDefectDescription = s.toString();
+            }
+        });
 
         saveButton.setOnClickListener(v -> {
             String vehicle = vehicleInput.getText().toString().trim();
@@ -79,13 +97,4 @@ public class AddCheckActivity extends AppCompatActivity {
         });
     }
 
-    // Simple text watcher to save typing into ViewModel
-    private static class SimpleWatcher implements TextWatcher {
-        interface Callback { void onText(String s); }
-        private Callback callback;
-        SimpleWatcher(Callback callback) { this.callback = callback; }
-        @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
-        @Override public void onTextChanged(CharSequence s, int a, int b, int c) {}
-        @Override public void afterTextChanged(Editable s) { callback.onText(s.toString()); }
-    }
 }

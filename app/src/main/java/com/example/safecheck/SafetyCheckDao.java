@@ -22,7 +22,6 @@ public interface SafetyCheckDao {
     @Delete
     void deleteCheck(SafetyCheck check);
 
-    // LiveData auto-updates the UI when data changes; runs off main thread automatically
     // Get all inspections
     //newest first
     @Query("SELECT * FROM safety_checks ORDER BY checkId DESC")

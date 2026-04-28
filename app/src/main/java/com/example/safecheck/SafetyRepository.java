@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 public class SafetyRepository {
 
@@ -18,15 +17,7 @@ public class SafetyRepository {
     public SafetyRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         dao = db.safetyCheckDao();
-        executor = Executors.newFixedThreadPool(2);
-    }
-
-    public void insertCheck(SafetyCheck check,
-                            Consumer<Long> onDone) {
-        executor.execute(() -> {
-            long newId = dao.insertCheck(check);
-            if (onDone != null) onDone.accept(newId);
-        });
+        executor = Executors.newSingleThreadExecutor();
     }
 
     public void insertDefect(Defect defect) {
