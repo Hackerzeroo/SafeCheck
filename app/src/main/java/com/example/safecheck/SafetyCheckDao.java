@@ -39,12 +39,4 @@ public interface SafetyCheckDao {
 
     @Query("SELECT COUNT(*) FROM defects WHERE checkId = :checkId")
     int countDefectsForCheck(int checkId);
-
-    // Get only high severity defects for a check
-    @Query("SELECT * FROM defects WHERE checkId = :checkId AND severity = 'High'")
-    List<Defect> getHighSeverityDefects(int checkId);
-
-    // Get unrepaired defects
-    @Query("SELECT * FROM defects WHERE isRepaired = 0")
-    List<Defect> getUnrepairedDefects();
 }
